@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_name" language="groovy" pageWidth="595" pageHeight="842" columnWidth="536" leftMargin="39" rightMargin="20" topMargin="20" bottomMargin="20" uuid="182c9ea0-a855-42bf-a96e-ae08f6cf39e6">
+	<property name="ireport.zoom" value="1.610510000000001"/>
+	<property name="ireport.x" value="179"/>
+	<property name="ireport.y" value="0"/>
+	<property name="TRYTON_RELATIONS" value="[&apos;lines&apos;]"/>
+	<style name="defecto" isDefault="true" forecolor="#000000" backcolor="#FFFFFF" fill="Solid" vAlign="Middle" markup="none" pattern="" isBlankWhenNull="true" fontName="DejaVu Sans" fontSize="10"/>
+	<style name="textoscabecera" style="defecto" forecolor="#000000" backcolor="#CCFFCC" radius="10" isBold="true" pdfFontName="Helvetica-Bold">
+		<pen lineWidth="1.0" lineColor="#FF0066"/>
+	</style>
+	<style name="letramuy pequeña" style="defecto" forecolor="#000000" backcolor="#CCFFCC" radius="10" fontSize="8" isBold="false">
+		<pen lineWidth="1.0" lineColor="#FF0066"/>
+	</style>
+	<style name="totals" style="defecto" isBold="true" pdfFontName="Helvetica-Bold">
+		<box leftPadding="5" rightPadding="5">
+			<topPen lineWidth="0.5"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="lines" fontName="DejaVu Sans" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{type}.equalsIgnoreCase("title") || $F{type}.equalsIgnoreCase("subtotal")]]></conditionExpression>
+			<style fontName="DejaVu Sans" fontSize="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="STEPS_DS" class="java.lang.Object"/>
+	<parameter name="LINES_DS" class="java.lang.Object"/>
+	<parameter name="OPERATIONS_DS" class="java.lang.Object"/>
+	<queryString language="xPath">
+		<![CDATA[/data/record]]>
+	</queryString>
+	<field name="amount" class="java.lang.Number">
+		<fieldDescription><![CDATA[lines/amount]]></fieldDescription>
+	</field>
+	<field name="description" class="java.lang.String">
+		<fieldDescription><![CDATA[lines/description]]></fieldDescription>
+	</field>
+	<field name="type" class="java.lang.String">
+		<fieldDescription><![CDATA[lines/type]]></fieldDescription>
+	</field>
+	<variable name="L" class="java.util.Locale">
+		<variableExpression><![CDATA[$P{REPORT_LOCALE}]]></variableExpression>
+		<initialValueExpression><![CDATA[$P{REPORT_LOCALE}]]></initialValueExpression>
+	</variable>
+	<variable name="L_code" class="java.lang.String">
+		<variableExpression><![CDATA[$V{L}.toString()]]></variableExpression>
+		<initialValueExpression><![CDATA[$V{L}.toString()]]></initialValueExpression>
+	</variable>
+	<filterExpression><![CDATA[!$F{type}.equalsIgnoreCase("pdf")]]></filterExpression>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement uuid="e747029c-7eff-4302-b963-e1d9bf616055" x="11" y="13" width="270" height="27"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[tr($V{L},"Detail")]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="41">
+			<textField>
+				<reportElement uuid="f8a75e5d-215b-4636-9e53-ba7124453148" x="0" y="24" width="366" height="16"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[tr($V{L},"Description")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d4e1032d-7b56-42c1-a60b-6c3b47242b4e" x="366" y="24" width="158" height="16"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[tr($V{L},"Amount")]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField pattern="dd-MM-yy">
+				<reportElement uuid="bf028bda-a51e-4d00-822f-14a05c9758d0" style="lines" x="0" y="6" width="366" height="16"/>
+				<textElement textAlignment="Left">
+					<font size="10" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="f13699e7-b1f4-440d-a0ba-013001177268" style="lines" x="366" y="6" width="158" height="16"/>
+				<textElement textAlignment="Right">
+					<font size="10" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

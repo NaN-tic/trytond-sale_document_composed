@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tryton>
+    <data>
+        <record model="ir.ui.view" id="sale_configuration_document_view_form">
+            <field name="model">sale.configuration.document</field>
+            <field name="type">form</field>
+            <field name="name">sale_configuration_document_form</field>
+        </record>
+        <record model="ir.ui.view" id="sale_configuration_document_view_list">
+            <field name="model">sale.configuration.document</field>
+            <field name="type">tree</field>
+            <field name="name">sale_configuration_document_list</field>
+        </record>
+        <record model="ir.model.access" id="access_sale_configuration_document">
+            <field name="model" search="[('model', '=', 'sale.configuration.document')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+        <record model="ir.model.access" id="access_sale_configuration_document_admin">
+            <field name="model" search="[('model', '=', 'sale.configuration.document')]"/>
+            <field name="group" ref="sale.group_sale_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+        <record model="ir.ui.view" id="sale_line_view_form">
+            <field name="model">sale.line</field>
+            <field name="type">form</field>
+            <field name="inherit" ref="sale.sale_line_view_form"/>
+            <field name="name">sale_line_form</field>
+        </record>
+        <record model="ir.ui.view" id="sale_configuration_view_form">
+            <field name="model">sale.configuration</field>
+            <field name="type">form</field>
+            <field name="inherit" ref="sale.sale_configuration_view_form"/>
+            <field name="name">sale_configuration_form</field>
+        </record>
+        <record model="ir.ui.view" id="print_warning_view_form">
+            <field name="model">sale.document.print.warning</field>
+            <field name="type">form</field>
+            <field name="name">print_warning_form</field>
+        </record>
+
+        <record model="ir.action.wizard" id="print">
+            <field name="name">Sale Document</field>
+            <field name="wiz_name">sale.document.print</field>
+            <field name="model">sale.sale</field>
+        </record>
+        <record model="ir.action.keyword" id="print_keyword">
+            <field name="keyword">form_print</field>
+            <field name="model">sale.sale,-1</field>
+            <field name="action" ref="print"/>
+        </record>
+        <record model="ir.action.report" id="document_title_report">
+            <field name="name">Sale Document Title</field>
+            <field name="model">sale.sale</field>
+            <field name="report_name">sale.document.title.report</field>
+            <field name="report">sale_document_composed/title.jrxml</field>
+        </record>
+        <record model="ir.action.report" id="document_index_report">
+            <field name="name">Sale Document Index</field>
+            <field name="model">sale.sale</field>
+            <field name="report_name">sale.document.index.report</field>
+            <field name="report">sale_document_composed/index.jrxml</field>
+        </record>
+        <record model="ir.action.report" id="document_detail_report">
+            <field name="name">Sale Document Detail</field>
+            <field name="model">sale.sale</field>
+            <field name="report_name">sale.document.detail.report</field>
+            <field name="report">sale_document_composed/detail.jrxml</field>
+        </record>
+        <record model="ir.action.report" id="document_report">
+            <field name="name">Sale Document</field>
+            <field name="model">sale.sale</field>
+            <field name="report_name">sale.document.report</field>
+        </record>
+    </data>
+</tryton>

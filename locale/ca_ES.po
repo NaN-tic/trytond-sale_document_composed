@@ -1,0 +1,140 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:sale.configuration,composition_page:"
+msgid "Composition Page"
+msgstr "Composició pàgina"
+
+msgctxt "field:sale.configuration,documents:"
+msgid "Documents"
+msgstr "Documents"
+
+msgctxt "field:sale.configuration.document,configuration:"
+msgid "Configuration"
+msgstr "Configuració"
+
+msgctxt "field:sale.configuration.document,content:"
+msgid "Content"
+msgstr "Contingut"
+
+msgctxt "field:sale.configuration.document,create_date:"
+msgid "Create Date"
+msgstr "Data de creació"
+
+msgctxt "field:sale.configuration.document,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:sale.configuration.document,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.configuration.document,name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:sale.configuration.document,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:sale.configuration.document,write_date:"
+msgid "Write Date"
+msgstr "Data modificación"
+
+msgctxt "field:sale.configuration.document,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:sale.document.print.warning,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt "field:sale.line,attachment:"
+msgid "Document"
+msgstr "Document"
+
+msgctxt "field:sale.line,attachment_resource:"
+msgid "Attachment Resource"
+msgstr "Recuers adjunt"
+
+msgctxt "field:sale.line,document:"
+msgid "Document"
+msgstr "Document"
+
+msgctxt "jasper:sale.document.detail.report:"
+msgid "Amount"
+msgstr "Quantitat"
+
+msgctxt "jasper:sale.document.detail.report:"
+msgid "Description"
+msgstr "Descripció"
+
+msgctxt "jasper:sale.document.detail.report:"
+msgid "Detail"
+msgstr "Detall"
+
+msgctxt "jasper:sale.document.index.report:"
+msgid "Index"
+msgstr "Índex"
+
+msgctxt "jasper:sale.document.title.report:"
+msgid "Customer"
+msgstr "Client"
+
+msgctxt "jasper:sale.document.title.report:"
+msgid "Sale"
+msgstr "Venda"
+
+msgctxt "jasper:sale.document.title.report:"
+msgid "Sale Date"
+msgstr "Data de venda"
+
+msgctxt "model:ir.action,name:document_detail_report"
+msgid "Sale Document Detail"
+msgstr "Detall document venda"
+
+msgctxt "model:ir.action,name:document_index_report"
+msgid "Sale Document Index"
+msgstr "Índex document venda"
+
+msgctxt "model:ir.action,name:document_report"
+msgid "Sale Document"
+msgstr "Document venda"
+
+msgctxt "model:ir.action,name:document_title_report"
+msgid "Sale Document Title"
+msgstr "Títol document venda"
+
+msgctxt "model:ir.action,name:print"
+msgid "Sale Document"
+msgstr "Document venda"
+
+msgctxt "model:sale.configuration.document,name:"
+msgid "Sale Configuration Document"
+msgstr "Document de configuració venda"
+
+msgctxt "model:sale.document.print.warning,name:"
+msgid "Print Document Warning"
+msgstr "Avís imprimir document"
+
+msgctxt "selection:sale.line,type:"
+msgid "PDF"
+msgstr "PDF"
+
+msgctxt "view:sale.configuration.document:"
+msgid "Sale Configuration Document"
+msgstr "Document de configuració venda"
+
+msgctxt "view:sale.document.print.warning:"
+msgid "It's not possible to print more than one sale. Please select only one"
+msgstr ""
+"No es pot imprimir més d'una venda. Si us plau, seleccioni'n només una."
+
+msgctxt "view:sale.document.print.warning:"
+msgid "Print Sale Document"
+msgstr "Imprimir document venda"
+
+msgctxt "wizard_button:sale.document.print,warning,end:"
+msgid "Ok"
+msgstr "D'acord"
