@@ -178,6 +178,8 @@ class DocumentReport(Report):
         additional = cls.get_additional_files(ids, data)
         files = []
         for report in (title[1], index[1]) + tuple(additional) + (detail[1],):
+            if not report:
+                continue
             fd, path = tempfile.mkstemp(suffix=(os.extsep + 'pdf'),
                 prefix='trytond_')
             with os.fdopen(fd, 'wb+') as fp:
