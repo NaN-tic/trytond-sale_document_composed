@@ -8,9 +8,11 @@ from trytond.pool import Pool, PoolMeta
 from trytond.pyson import Eval
 from trytond.report import Report
 from trytond.transaction import Transaction
+from trytond.exceptions import UserError
 from trytond.wizard import Wizard, StateView, StateTransition, StateAction, \
     Button
-from trytond.modules.jasper_reports.jasper import JasperReport
+from trytond.modules.jasper_reports.jasper import JasperReport, StringIO, \
+    PdfFileWriter, PdfFileReader
 
 __all__ = ['Configuration', 'ConfigurationDocument', 'SaleLine',
     'PrintDocumentWarning', 'PrintDocument', 'DocumentTitleReport',
@@ -167,7 +169,7 @@ class DocumentReport(Report):
                 ('report_name', '=', cls.__name__)
                 ])
         if not action_reports:
-            raise Exception('Error', 'Report (%s) not found!' % cls.__name__)
+            raise UserError('Warning', 'Report (%s) not found!' % cls.__name__)
         action_report = action_reports[0]
         # Pick only one id (as it will fail if we try to execute for more)
         if len(ids) > 1:
@@ -176,48 +178,26 @@ class DocumentReport(Report):
         index = cls.get_index_report(ids, data)
         detail = cls.get_detail_report(ids, data)
         additional = cls.get_additional_files(ids, data)
-        files = []
-        for report in (title[1], index[1]) + tuple(additional) + (detail[1],):
-            if not report:
-                continue
-            fd, path = tempfile.mkstemp(suffix=(os.extsep + 'pdf'),
-                prefix='trytond_')
-            with os.fdopen(fd, 'wb+') as fp:
-                fp.write(report)
-            files.append(path)
-        fd, outputFile = tempfile.mkstemp(suffix=(os.extsep + 'pdf'),
-                prefix='trytond_')
-        os.close(fd)
-        cmd = ['pdftk']
-        cmd += files
-        cmd += ['cat', 'output', outputFile]
+        pdfs_data = (title[1], index[1]) + tuple(additional) + (detail[1],)
+        pdf_data = JasperReport.merge_pdfs(pdfs_data)
         try:
-            proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-            stdoutdata, stderrdata = proc.communicate()
-            if proc.wait() != 0:
-                raise Exception(stderrdata)
             if config.composition_page:
-                inputFile = outputFile
-                files.append(inputFile)
-                fd, background = tempfile.mkstemp(suffix=(os.extsep + 'pdf'),
-                    prefix='trytond_')
-                with os.fdopen(fd, 'wb+') as fp:
-                    fp.write(config.composition_page)
-                files.append(background)
-                fd, outputFile = tempfile.mkstemp(suffix=(os.extsep + 'pdf'),
-                        prefix='trytond_')
-                os.close(fd)
-                cmd = ['pdftk', inputFile, 'background', background, 'output',
-                    outputFile]
-                proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-                stdoutdata, stderrdata = proc.communicate()
-                if proc.wait() != 0:
-                    raise Exception(stderrdata)
-            with open(outputFile, 'rb') as f:
-                file_data = f.read()
-            files.append(outputFile)
-            return ('pdf', buffer(file_data), action_report.direct_print,
+                output = PdfFileWriter()
+                orig = PdfFileReader(StringIO.StringIO(pdf_data))
+                wpdf = PdfFileReader(StringIO.StringIO(
+                        config.composition_page))
+                watermark = wpdf.getPage(0)
+                for i in xrange(orig.getNumPages()):
+                    page = orig.getPage(i)
+                    page.mergePage(watermark)
+                    output.addPage(page)
+
+                tmppdf = StringIO.StringIO()
+                output.write(tmppdf)
+                pdf_data = tmppdf.getvalue()
+                tmppdf.close()
+
+            return ('pdf', buffer(pdf_data), action_report.direct_print,
                 action_report.name)
-        finally:
-            for path in files:
-                os.remove(path)
+        except:
+            raise UserError('Warning', 'Report (%s) not found!' % cls.__name__)
