@@ -175,10 +175,14 @@ class DocumentReport(Report):
         if len(ids) > 1:
             ids = [ids[0]]
         title = cls.get_title_report(ids, data)
+        title = title and (title[1],) or ()
         index = cls.get_index_report(ids, data)
+        index = index and (index[1],) or ()
         detail = cls.get_detail_report(ids, data)
+        detail = detail and (detail[1],) or ()
         additional = cls.get_additional_files(ids, data)
-        pdfs_data = (title[1], index[1]) + tuple(additional) + (detail[1],)
+        additional = additional and tuple(additional) or ()
+        pdfs_data = title + index + additional + detail
         pdf_data = JasperReport.merge_pdfs(pdfs_data)
         try:
             if config.composition_page:
