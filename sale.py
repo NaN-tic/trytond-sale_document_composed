@@ -11,8 +11,9 @@ from trytond.transaction import Transaction
 from trytond.exceptions import UserError
 from trytond.wizard import Wizard, StateView, StateTransition, StateAction, \
     Button
-from trytond.modules.jasper_reports.jasper import JasperReport, StringIO, \
-    PdfFileWriter, PdfFileReader
+from trytond.modules.jasper_reports.jasper import JasperReport
+from PyPDF2 import PdfFileReader, PdfFileWriter
+from io import BytesIO
 
 __all__ = ['Configuration', 'ConfigurationDocument', 'SaleLine',
     'PrintDocumentWarning', 'PrintDocument', 'DocumentTitleReport',
@@ -187,8 +188,8 @@ class DocumentReport(Report):
         try:
             if config.composition_page:
                 output = PdfFileWriter()
-                orig = PdfFileReader(StringIO.StringIO(pdf_data))
-                wpdf = PdfFileReader(StringIO.StringIO(
+                orig = PdfFileReader(BytesIO(pdf_data))
+                wpdf = PdfFileReader(BytesIO(
                         config.composition_page))
                 watermark = wpdf.getPage(0)
                 for i in xrange(orig.getNumPages()):
@@ -196,7 +197,7 @@ class DocumentReport(Report):
                     page.mergePage(watermark)
                     output.addPage(page)
 
-                tmppdf = StringIO.StringIO()
+                tmppdf = BytesIO()
                 output.write(tmppdf)
                 pdf_data = tmppdf.getvalue()
                 tmppdf.close()
