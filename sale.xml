@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <tryton>
     <data>
         <record model="ir.ui.view" id="sale_configuration_document_view_form">
