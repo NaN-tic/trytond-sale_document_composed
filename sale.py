@@ -74,10 +74,8 @@ class SaleLine:
 
     @fields.depends('document')
     def on_change_document(self):
-        changes = {}
         if self.document:
-            changes['description'] = self.document.name
-        return changes
+            self.description = self.document.name
 
 
 class PrintDocumentWarning(ModelView):
